@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://localhost:7193/api/Products';
+const API_BASE_URL = 'https://localhost:7043/api/Accounts';
 
 export const fetchAccounts = () => {
   console.log("Fetching accounts from API...");

@@ -1,4 +1,6 @@
 // src/redux/sagas/accountSaga.js
+import Swal from 'sweetalert2';
+
 import { put, takeEvery, call } from "redux-saga/effects";
 import {
   FETCH_ACCOUNTS,
@@ -26,11 +28,47 @@ function* fetchAccountsSaga() {
 function* createAccountSaga(action) {
   try {
     yield call(createAPI, action.payload);
-    yield call(fetchAccountsSaga); // refresh list
+    yield call(fetchAccountsSaga); // Refresh table
+
+    // ✅ Show success message
+    Swal.fire({
+      icon: 'success',
+      title: 'Account created successfully',
+      timer: 2000,
+      showConfirmButton: false,
+    });
   } catch (error) {
     console.error("Create failed", error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Create failed!',
+      text: error.message,
+    });
   }
 }
+
+function* deleteAccountSaga(action) {
+  try {
+    yield call(deleteAPI, action.payload);
+    yield call(fetchAccountsSaga); // Refresh table
+
+    // ✅ Show success message
+    Swal.fire({
+      icon: 'success',
+      title: 'Account deleted successfully',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  } catch (error) {
+    console.error("Delete failed", error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Delete failed!',
+      text: error.message,
+    });
+  }
+}
+
 
 function* updateAccountSaga(action) {
   try {
@@ -41,14 +79,7 @@ function* updateAccountSaga(action) {
   }
 }
 
-function* deleteAccountSaga(action) {
-  try {
-    yield call(deleteAPI, action.payload);
-    yield call(fetchAccountsSaga);
-  } catch (error) {
-    console.error("Delete failed", error);
-  }
-}
+
 
 export default function* accountRootSaga() {
   yield takeEvery(FETCH_ACCOUNTS, fetchAccountsSaga);
