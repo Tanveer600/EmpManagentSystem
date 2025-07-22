@@ -29,14 +29,14 @@ function Account() {
 
 
   return (
-    <div className="container mt-3">
-      <div className="col-md-12">
+    <div className="container-fluid mt-3">
+      <div className="col-12">
         <div className="card">
           <div className="card-header">
-            <div className="d-flex justify-content-end mb-3">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <div className="card-title">Account List</div>
               <button className="btn btn-primary" onClick={handleOpenModal}>New Add</button>
             </div>
-            <div className="card-title">Account Table</div>
           </div>
           <div className="card-body">
             <table className="table table-hover">

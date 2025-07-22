@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from '../components/Sidebar';
 import Headers from "../components/Headers";
-import Footers from "../components/Footers";
+
 import { Outlet } from 'react-router-dom';
 
 function MainLayouts() {

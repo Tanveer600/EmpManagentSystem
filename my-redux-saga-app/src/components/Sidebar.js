@@ -55,13 +55,32 @@ function Sidebar() {
               <h4 className="text-section">Components</h4>
             </li>
 
+
+ <li className="nav-item">
+              <a data-bs-toggle="collapse" href="#account" className="collapsed" aria-expanded="false">
+                <i className="fas fa-home"></i>
+                <p>Acccounts</p>
+                <span className="caret"></span>
+              </a>
+              <div className="collapse" id="account">
+                <ul className="nav nav-collapse">
+                  <li>
+                    <Link to="/account">
+                      <span className="sub-item">Account</span>
+                    </Link>
+                      <Link to="/transaction">
+                      <span className="sub-item">Transaction</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </li>
             <li className="nav-item">
-              <Link to="/account" className="nav-link">
-                <i className="fas fa-user-circle"></i>
-                <p>Account</p>
+              <Link className="nav-link" to="/customer">
+                <i className="fas fa-th-list"></i>
+                <p>Customer</p>
               </Link>
             </li>
-
 
             <li className="nav-item">
               <Link className="nav-link" to="/project">
@@ -76,12 +95,7 @@ function Sidebar() {
                 <p>Employee</p>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/transaction">
-                <i className="fas fa-th-list"></i>
-                <p>Transaction</p>
-              </Link>
-            </li>
+          
             <li className="nav-item">
               <Link className="nav-link" to="/bill">
                 <i className="fas fa-th-list"></i>
@@ -94,7 +108,7 @@ function Sidebar() {
                 <p>Service Order</p>
               </Link>
             </li>
-         <li className="nav-item">
+            <li className="nav-item">
               <Link className="nav-link" to="/invoice">
                 <i className="fas fa-th-list"></i>
                 <p>Invoice</p>
