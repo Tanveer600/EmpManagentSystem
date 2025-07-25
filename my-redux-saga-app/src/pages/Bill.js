@@ -77,7 +77,7 @@ function Bill() {
                   <tr key={bill.id}>
                     <td>{index + 1}</td>
                     <td>{bill.billNo}</td>
-                    <td>{bill.billDate}</td>
+                    <td>{bill.billDate?.slice(0, 10)}</td>
                     <td>{bill.customerID}</td>
                     <td>{bill.projectID}</td>
                     <td>{bill.description}</td>

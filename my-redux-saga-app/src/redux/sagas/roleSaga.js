@@ -2,32 +2,32 @@
 import Swal from 'sweetalert2';
 
 import { put, takeEvery, call } from "redux-saga/effects";
-import { SET_BILL,DELETE_BILL,UPDATE_BILL,CREATE_BILL,FETCH_BILLS } from '../constants/billConstants';
+import { SET_ROLE,DELETE_ROLE,UPDATE_ROLE,CREATE_ROLE,FETCH_ROLES } from '../constants/roleConstants';
 import {
-  fetchBill as fetchAPI, // ✅ Correct
-  createBill as createAPI,
-  updateBill as updateAPI,
-  deleteBill as deleteAPI,
-} from '../../api/billApi';
+  fetchRole as fetchAPI, // ✅ Correct
+  createRole as createAPI,
+  updateRole as updateAPI,
+  deleteRole as deleteAPI,
+} from '../../api/roleApi';
 
-function* fetchBillSaga() {
+function* fetchRoleSaga() {
   try {
     const response = yield call(fetchAPI);
-    yield put({ type: SET_BILL, payload: response.data.data });
+    yield put({ type: SET_ROLE, payload: response.data.data });
   } catch (error) {
-    console.error("Fetch accounts failed", error);
+    console.error("Fetch ROLES failed", error);
   }
-};
+}
 
-function* createBillSaga(action) {
+function* createRoleSaga(action) {
   try {
     yield call(createAPI, action.payload);
-    yield call(fetchBillSaga); // Refresh table
+    yield call(fetchRoleSaga); // Refresh table
 
     // ✅ Show success message
     Swal.fire({
       icon: 'success',
-      title: 'Bill created successfully',
+      title: 'role created successfully',
       timer: 2000,
       showConfirmButton: false,
     });
@@ -41,15 +41,15 @@ function* createBillSaga(action) {
   }
 }
 
-function* deleteBillSaga(action) {
+function* deleteRoleSaga(action) {
   try {
     yield call(deleteAPI, action.payload);
-    yield call(fetchBillSaga); // Refresh table
+    yield call(fetchRoleSaga); // Refresh table
 
     // ✅ Show success message
     Swal.fire({
       icon: 'success',
-      title: 'Bill deleted successfully',
+      title: 'role deleted successfully',
       timer: 2000,
       showConfirmButton: false,
     });
@@ -64,10 +64,10 @@ function* deleteBillSaga(action) {
 }
 
 
-function* updateBillSaga(action) {
+function* updateRoleSaga(action) {
   try {
     yield call(updateAPI, action.payload.id, action.payload);
-    yield call(fetchBillSaga);
+    yield call(fetchRoleSaga);
   } catch (error) {
     console.error("Update failed", error);
   }
@@ -75,9 +75,9 @@ function* updateBillSaga(action) {
 
 
 
-export default function* BillRootSaga() {
-  yield takeEvery(FETCH_BILLS, fetchBillSaga);
-  yield takeEvery(CREATE_BILL, createBillSaga);
-  yield takeEvery(UPDATE_BILL, updateBillSaga);
-  yield takeEvery(DELETE_BILL, deleteBillSaga);
+export default function* RoleRootSaga() {
+  yield takeEvery(FETCH_ROLES, fetchRoleSaga);
+  yield takeEvery(CREATE_ROLE, createRoleSaga);
+  yield takeEvery(UPDATE_ROLE, updateRoleSaga);
+  yield takeEvery(DELETE_ROLE, deleteRoleSaga);
 }

@@ -6,7 +6,8 @@ import { fetchAccounts } from '../redux/actions/accountActions';
 
 function Transaction() {
   const dispatch = useDispatch();
-const transactions = useSelector(state => state.transaction?.transactions || []);
+  const transactions = useSelector(state => state.transaction?.transactions || []);
+  const user = useSelector((state) => state.user.user);
 
 
   const [showModal, setShowModal] = useState(false);
@@ -19,18 +20,18 @@ const transactions = useSelector(state => state.transaction?.transactions || [])
     createdOn: '',
     userID: ''
   });
-const accounts = useSelector(state => state.account.accounts);
+  const accounts = useSelector(state => state.account.accounts);
 
-useEffect(() => {
-  console.log("Transactions on mount:", transactions); // 👈 Add this
-}, [transactions]);
+  useEffect(() => {
+    console.log("Transactions on mount:", transactions); // 👈 Add this
+  }, [transactions]);
 
   useEffect(() => {
     dispatch(fetchTransactions());
   }, [dispatch]);
-useEffect(() => {
-  dispatch(fetchAccounts());
-}, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAccounts());
+  }, [dispatch]);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => {
@@ -49,13 +50,18 @@ useEffect(() => {
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
-const getAccountName = (id) => {
-  const account = accounts.find(a => a.id === id);
-  return account ? account.name : 'N/A';
-};
+  const getAccountName = (id) => {
+    const account = accounts.find(a => a.id === id);
+    return account ? account.name : 'N/A';
+  };
 
   const handleSubmit = () => {
-    dispatch(createTransaction({ ...formData }));
+    const transactionWithUser = {
+      ...formData,
+      userID: user?.id || 0 // fallback if user not found
+    };
+
+    dispatch(createTransaction(transactionWithUser));
     handleCloseModal();
   };
 
@@ -153,19 +159,19 @@ const getAccountName = (id) => {
                   onChange={handleChange}
                   placeholder="Credit Amount"
                 />
-              <select
-  name="accountID"
-  value={formData.accountID}
-  onChange={handleChange}
-  className="form-control mb-2"
->
-  <option value="">-- Select Account name --</option>
-  {accounts.map(account => (
-    <option key={account.id} value={account.id}>
-      {account.name}
-    </option>
-  ))}
-</select>
+                <select
+                  name="accountID"
+                  value={formData.accountID}
+                  onChange={handleChange}
+                  className="form-control mb-2"
+                >
+                  <option value="">-- Select Account name --</option>
+                  {accounts.map(account => (
+                    <option key={account.id} value={account.id}>
+                      {account.name}
+                    </option>
+                  ))}
+                </select>
 
                 <input
                   type="date"
@@ -175,10 +181,10 @@ const getAccountName = (id) => {
                   placeholder="Created On"
                 />
                 <input
-                  type="number"
-                  name="userID"
+                  type="text"
                   className="form-control mb-2"
-                  onChange={handleChange}
+                  value={user?.id || ''}
+                  disabled
                   placeholder="User ID"
                 />
               </div>

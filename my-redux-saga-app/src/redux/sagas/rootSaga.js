@@ -8,6 +8,7 @@ import EmployeeRootSaga from './employeeSaga';
 import BillRootSaga from './billSaga';
 import ServiceOrderRootSaga from './serviceOrderSaga'
 import InvoiceRootSaga from './invoiceSaga';
+import RoleRootSaga from './roleSaga';
 export default function* rootSaga() {
   yield all([
     accountRootSaga(),
@@ -19,6 +20,6 @@ export default function* rootSaga() {
     BillRootSaga(),
     ServiceOrderRootSaga(),
     InvoiceRootSaga(),
-
+    RoleRootSaga(),
   ]);
-}
+};

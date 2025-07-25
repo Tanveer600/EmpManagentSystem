@@ -5,8 +5,10 @@ import { createAccount, deleteAccount, fetchAccounts } from '../redux/actions/ac
 function Account() {
   const dispatch = useDispatch();
   const accounts = useSelector(state => state.account.accounts);
+  const user = useSelector(state => state.user.user);
+
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ name: '', openingbalance: '', openingdate: '' ,createdon: '',userid:'',costcenter:'' });
+  const [formData, setFormData] = useState({ name: '', openingbalance: '', openingdate: '', createdon: '', userid: '', costcenter: '' });
 
   useEffect(() => {
     dispatch(fetchAccounts());
@@ -15,17 +17,23 @@ function Account() {
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => {
     setShowModal(false);
-    setFormData({  name: '', openingbalance: '', openingdate: '' ,createdon: '',userid:'',costcenter:''  });
+    setFormData({ name: '', openingbalance: '', openingdate: '', createdon: '', userid: '', costcenter: '' });
   };
 
   const handleSubmit = () => {
-    dispatch(createAccount({ ...formData }));
+    const accountWithUser = {
+      ...formData,
+      userid: user?.id || 0 // Set user ID from logged-in user
+    };
+
+    dispatch(createAccount(accountWithUser));
     handleCloseModal();
   };
 
- const handleChange = (e) => {
-  setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-};
+
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
 
   return (
@@ -45,34 +53,34 @@ function Account() {
                   <th>#</th>
                   <th>Name</th>
                   <th>Opening Balance</th>
-                    <th>Opening Date</th>
-                     <th>Created On</th>
-                      <th>User ID</th>
-                       <th>Cost Center</th>
-                    <th>Action</th>
+                  <th>Opening Date</th>
+                  <th>Created On</th>
+
+                  <th>Cost Center</th>
+                  <th>Action</th>
                 </tr>
               </thead>
-             <tbody>
-  {accounts.map((item, index) => (
-    <tr key={index}>
-      <td>{index + 1}</td> {/* Serial # */}
-      <td>{item.name}</td>
-      <td>{item.openingBalance}</td>
-      <td>{new Date(item.openingDate).toLocaleDateString()}</td>
-      <td>{new Date(item.createdOn).toLocaleDateString()}</td>
-      <td>{item.userID}</td>
-      <td>{item.costCenter}</td>
-      <td>
-        <button
-          className="btn btn-sm btn-danger"
-          onClick={() => dispatch(deleteAccount(item.id))}
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+              <tbody>
+                {accounts.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td> {/* Serial # */}
+                    <td>{item.name}</td>
+                    <td>{item.openingBalance}</td>
+                    <td>{new Date(item.openingDate).toLocaleDateString()}</td>
+                    <td>{new Date(item.createdOn).toLocaleDateString()}</td>
+
+                    <td>{item.costCenter}</td>
+                    <td>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => dispatch(deleteAccount(item.id))}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
 
             </table>
           </div>
@@ -92,48 +100,50 @@ function Account() {
                 <button type="button" className="btn-close" onClick={handleCloseModal}></button>
               </div>
               <div className="modal-body">
-             <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            className="form-control mb-2"
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="openingbalance"
-            placeholder="Opening Balance"
-            className="form-control mb-2"
-            onChange={handleChange}
-          />
-          <input
-            type="date"
-            name="openingdate"
-            placeholder="Opening Date"
-            className="form-control mb-2"
-            onChange={handleChange}
-          />
-          <input
-            type="date"
-            name="createdon"
-            placeholder="Created On"
-            className="form-control mb-2"
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="userid"
-            placeholder="User ID"
-            className="form-control mb-2"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="costcenter"
-            placeholder="Cost Center"
-            className="form-control mb-2"
-            onChange={handleChange}
-          />       
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="form-control mb-2"
+                  onChange={handleChange}
+                />
+                <input
+                  type="number"
+                  name="openingbalance"
+                  placeholder="Opening Balance"
+                  className="form-control mb-2"
+                  onChange={handleChange}
+                />
+                <input
+                  type="date"
+                  name="openingdate"
+                  placeholder="Opening Date"
+                  className="form-control mb-2"
+                  onChange={handleChange}
+                />
+                <input
+                  type="date"
+                  name="createdon"
+                  placeholder="Created On"
+                  className="form-control mb-2"
+                  onChange={handleChange}
+                />
+                <input
+                  type="number"
+                  name="userid"
+                  placeholder="User ID"
+                  className="form-control mb-2"
+                  value={user?.id || ""}
+                  disabled
+                />
+
+                <input
+                  type="text"
+                  name="costcenter"
+                  placeholder="Cost Center"
+                  className="form-control mb-2"
+                  onChange={handleChange}
+                />
               </div>
               <div className="modal-footer">
                 <button className="btn btn-secondary" onClick={handleCloseModal}>Close</button>

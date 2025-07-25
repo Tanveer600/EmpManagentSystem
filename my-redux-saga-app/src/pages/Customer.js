@@ -6,6 +6,8 @@ import { fetchCustomer,createCustomer,deleteCustomer } from '../redux/actions/cu
 function Customer() {
   const dispatch= useDispatch();
   const customers=useSelector(state=>state.customer.customers);
+  const user = useSelector(state => state.user.user); // 👈 get logged-in user
+
   //console.info("cutsomers",customers);
   const[showModal,setShowModal]=useState(false);
   const[formData,setFormData]=useState({name:'',address:'',city:'',contact:'',country:'',email:'',userid:''});
@@ -14,10 +16,19 @@ function Customer() {
     setShowModal(false);
     setFormData({name:'',address:'',city:'',contact:'',country:'',email:'',userid:''});
   };
-  const handleSubmit=()=>{
-    dispatch(createCustomer({...formData}));
-    handleCloseModal();
+
+
+
+  const handleSubmit = () => {
+  const CustomerWithUser = {
+    ...formData,
+    userid: user?.id || 0 // Auto-inject user ID
   };
+
+   dispatch(createCustomer(CustomerWithUser));
+  handleCloseModal();
+};
+
   const handleChange=(e)=>{
     setFormData(prev=>({...prev,[e.target.name]:e.target.value}));
   };
@@ -133,7 +144,14 @@ function Customer() {
               className="form-control mb-2"
               onChange={handleChange}
             />  
-             
+              <input
+                  type="number"
+                  name="userid"
+                  placeholder="User ID"
+                  className="form-control mb-2"
+                  value={user?.id || ""}
+                  disabled
+                />
                 </div>
                 <div className="modal-footer">
                   <button className="btn btn-secondary" onClick={handleCloseModal}>Close</button>

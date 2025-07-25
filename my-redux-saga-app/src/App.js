@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import MainLayouts from './Main/MainLayouts';
 import Dashboard from './pages/Dashboard';
-import Account from './pages/Account' ;
+import Account from './pages/Account';
 import Transaction from './pages/Transaction';
 import Employee from './pages/Employee';
 import Customer from './pages/Customer';
@@ -11,7 +11,9 @@ import Bill from './pages/Bill';
 import ServiceOrder from './pages/ServiceOrder';
 import Invoice from './pages/Invoice';
 import Project from './pages/Project';
-import Login from './pages/Login'
+import Login from './pages/Login';
+import Role from './pages/Role';
+import User from './pages/User';
 
 function App() {
   const user = useSelector((state) => state.user.user); // or however your state is structured
@@ -30,9 +32,12 @@ function App() {
           <Route path="project" element={<Project />} />
           <Route path="customer" element={<Customer />} />
           <Route path="service" element={<ServiceOrder />} />
-          <Route path="user" element={<Login />} />
+          
           <Route path="invoice" element={<Invoice />} />
           <Route path="account" element={<Account />} />
+          <Route path="role" element={<Role />} />
+          <Route path='user' element={<User/>} />
+       
         </Route>
       ) : (
         // Redirect to login if not authenticated

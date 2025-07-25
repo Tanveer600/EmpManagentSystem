@@ -8,7 +8,7 @@ import { employeeReducer } from "./reducers/employeeReducer";
 import { billReducer } from "./reducers/billReducer";
 import { serviceordersReducer } from "./reducers/serviceOrderReducer";
 import { invoicesReducer } from "./reducers/invoiceReducers";
-
+import { roleReducer } from "./reducers/roleReducer";
 const rootReducer = combineReducers({
   account: accountReducer,
   transaction:transactionReducer,
@@ -18,7 +18,9 @@ const rootReducer = combineReducers({
   employee:employeeReducer,
   bill:billReducer,
   serviceorder:serviceordersReducer,
-  invoice:invoicesReducer
+  invoice:invoicesReducer,
+  role:roleReducer,
+  
 });
 
 export default rootReducer;
