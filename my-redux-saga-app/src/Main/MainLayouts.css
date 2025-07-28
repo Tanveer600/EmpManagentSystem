@@ -1,0 +1,27 @@
+/* MainLayouts.css */
+.sidebar-wrapper {
+  width: 240px;
+  transition: width 0.3s;
+}
+.sidebar-wrapper.collapsed {
+  width: 70px;
+}
+
+.main-content {
+  transition: margin-left 0.3s, width 0.3s;
+}
+
+.main-content.expanded {
+  width: calc(100% - 70px);
+}
+
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    position: absolute;
+    z-index: 1050;
+    height: 100vh;
+  }
+  .main-content {
+    width: 100% !important;
+  }
+}

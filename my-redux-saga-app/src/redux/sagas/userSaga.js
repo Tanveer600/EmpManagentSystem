@@ -1,5 +1,6 @@
 import { put, takeEvery, call } from "redux-saga/effects";
 import Swal from "sweetalert2";
+
 import {
   SIGNUP_USER,
   LOGIN_USER,
@@ -28,7 +29,7 @@ function* fetchUserSaga() {
     console.error("Fetch user failed", error);
   }
 }
-
+///////////////////////////////////
 
 function* createUserSaga(action) {
   try {

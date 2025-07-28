@@ -47,7 +47,8 @@ function Account() {
             </div>
           </div>
           <div className="card-body">
-            <table className="table table-hover">
+        <div className="table-responsive">
+  <table className="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -83,6 +84,7 @@ function Account() {
               </tbody>
 
             </table>
+          </div>
           </div>
         </div>
       </div>
