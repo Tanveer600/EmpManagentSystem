@@ -72,12 +72,31 @@ function* deleteAccountSaga(action) {
 
 function* updateAccountSaga(action) {
   try {
-    yield call(updateAPI, action.payload.id, action.payload);
-    yield call(fetchAccountsSaga);
+    const { id, data } = action.payload;
+    console.log("Updating account with ID:", id); // should show correct ID now
+
+    const response = yield call(updateAPI, { id, data });
+ yield call(fetchAccountsSaga); // Refresh table
+ 
+
+    yield put({ type: "UPDATE_ACCOUNT_SUCCESS", payload: response.data });
+     Swal.fire({
+      icon: 'success',
+      title: 'Account Updarted successfully',
+      timer: 2000,
+      showConfirmButton: false,
+    });
   } catch (error) {
     console.error("Update failed", error);
+    yield put({ type: "ACCOUNT_ERROR", payload: error.message });
+    Swal.fire({
+      icon: 'error',
+      title: 'updated failed!',
+      text: error.message,
+    });
   }
 }
+
 
 
 

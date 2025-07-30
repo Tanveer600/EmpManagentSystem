@@ -1,10 +1,9 @@
-// MainLayouts.jsx
 import React, { useState } from "react";
 import Sidebar from '../components/Sidebar';
 import Headers from "../components/Headers";
 import Footers from "../components/Footers";
 import { Outlet } from 'react-router-dom';
-import '../Main/MainLayouts.css'; // Include CSS shown below
+import '../Main/MainLayouts.css';
 
 function MainLayouts() {
   const [collapsed, setCollapsed] = useState(false);
@@ -17,12 +16,16 @@ function MainLayouts() {
         <Sidebar collapsed={collapsed} toggleSidebar={toggleSidebar} />
       </div>
 
-      {/* Main content */}
-      <div className={`main-content flex-grow-1 ${collapsed ? 'expanded' : ''}`}>
+      {/* Main content area */}
+      <div className={`main-content d-flex flex-column flex-grow-1`}>
         <Headers toggleSidebar={toggleSidebar} />
-        <main className="p-3">
+        
+        {/* Page content that pushes footer down */}
+        <main className="flex-grow-1 p-3">
           <Outlet />
         </main>
+
+        {/* Footer always at the bottom */}
         <footer className="bg-light border-top py-3 px-4">
           <Footers />
         </footer>
