@@ -12,12 +12,26 @@ export const fetchUser = (data = {}) => {
   return axios.post(`${LOGIN_BASE_URL}/get`, data);
 };
 
-export const createUsers=(data)=>{
-return axios.post(`${LOGIN_BASE_URL}/save`,data);
+export const createUsers = (data) => {
+  const isFormData = data instanceof FormData;
+
+  return axios.post(`${LOGIN_BASE_URL}/save`, data, {
+    headers: {
+      "Content-Type": isFormData ? "multipart/form-data" : "application/json",
+    },
+  });
 };
-export const updateUser=(id,data)=>{
-    return axios.put(`${LOGIN_BASE_URL}/save/${id}`,data);
+
+export const updateUser = (id, data) => {
+  const isFormData = data instanceof FormData;
+
+  return axios.put(`${LOGIN_BASE_URL}/save/${id}`, data, {
+    headers: {
+      "Content-Type": isFormData ? "multipart/form-data" : "application/json",
+    },
+  });
 };
+
 export const deleteUser = (id) => {
   console.log("Deleting user with ID:", id);
   return axios.post(`${LOGIN_BASE_URL}/remove`, { ID: id }); 

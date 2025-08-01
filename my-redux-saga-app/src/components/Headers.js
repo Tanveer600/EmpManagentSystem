@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 
 function Headers({ toggleSidebar }) {
-  const [user, setUser] = useState({ loginName: '', loginPwd: '' });
+  const [user, setUser] = useState({ loginName: '', loginPwd: '', userImage: '' });
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    const savedUser = JSON.parse(sessionStorage.getItem('user'));
-    if (savedUser) {
-      setUser(savedUser);
-    }
-  }, []);
+useEffect(() => {
+  const savedUser = JSON.parse(sessionStorage.getItem('user'));
+
+  if (savedUser) {
+    console.log("🖼️ Image path:", savedUser.userImage); // should be like /images/abc.png
+    setUser(savedUser);
+  }
+}, []);
+
 
   const togglePassword = () => {
     setShowPassword(prev => !prev);
@@ -29,7 +32,7 @@ function Headers({ toggleSidebar }) {
           height="30"
           className="me-2"
         />
-       
+
       </a>
 
       <div className="collapse navbar-collapse" id="navbarContent">
@@ -59,12 +62,13 @@ function Headers({ toggleSidebar }) {
               aria-expanded="false"
             >
               <img
-                src="assets/img/profile.jpg"
+                src={`https://localhost:7043${user.userImage}`}
                 alt="Profile"
                 className="rounded-circle"
                 width="35"
                 height="35"
               />
+
               <span className="ms-2 text-light d-none d-md-inline">
                 {user.loginName || 'Guest'}
               </span>
